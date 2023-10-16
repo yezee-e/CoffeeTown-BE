@@ -1,7 +1,7 @@
 const userDao = require('../models/user.dao');
 
 const signUP = async (user_email, user_name, user_password, user_nickname) => {
-  //a. email에 @와 .이 누락되지 않았는지 판단
+  //a. email에 @가 누락되지 않았는지 판단
   if (!user_email.includes('@')) {
     throw new Error('@를 넣어주세요');
   }
