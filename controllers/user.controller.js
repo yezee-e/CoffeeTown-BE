@@ -1,5 +1,6 @@
 const userService = require('../services/user.service');
 
+//회원가입
 const signUp = async (req, res) => {
   try {
     //nickname,email,password,profile_image received from 요청(req)

@@ -1,5 +1,13 @@
 const myDataSource = require('../models/index');
 
+const findUserByEmail = async (user_email) => {
+  const user = await myDataSource.query(
+    `SELECT user_email FROM userInfo WHERE user_email="${user_email}"`
+  );
+  console.log('user', user);
+  return user;
+};
+
 const createUser = async (
   user_email,
   user_name,
@@ -19,4 +27,5 @@ const createUser = async (
 
 module.exports = {
   createUser,
+  findUserByEmail,
 };

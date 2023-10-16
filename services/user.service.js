@@ -10,6 +10,14 @@ const signUP = async (user_email, user_name, user_password, user_nickname) => {
   if (user_password.length < 10) {
     throw new Error('비밀번호는 10자리 이상이어야합니다');
   }
+
+  // c.이미 가입된 유저인지 아닌지 판단
+  const user = await userDao.findUserByEmail(user_email);
+  console.log('is user exist?', user);
+  if (user.length !== 0) {
+    throw new Error('user already exist');
+  }
+
   return await userDao.createUser(
     user_email,
     user_name,
