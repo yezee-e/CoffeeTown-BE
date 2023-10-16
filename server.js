@@ -1,5 +1,5 @@
 require('dotenv').config();
-
+const menuCategoryRouter = require('./routers/menuCategoryRouter.router');
 const { createApp } = require('./app');
 
 const startServer = async () => {

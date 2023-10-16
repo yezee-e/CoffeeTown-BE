@@ -4,4 +4,5 @@ const userController = require('../controllers/user.controller');
 
 router.post('/join', userController.signUp);
 
+
 module.exports = router;
