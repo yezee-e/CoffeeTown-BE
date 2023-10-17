@@ -1,9 +1,9 @@
-const myDataSource = require('./index');
+const myDataSource = require('../models/index');
 
 
-const products = () => {
+const menus = () => {
   return new Promise((res, rej) => {
-    myDataSource.query('SELECT * FROM product', (error, results) => {
+    myDataSource.query('SELECT * FROM menu', (error, results) => {
       if (error) {
         rej(error);
       } else {
@@ -14,5 +14,5 @@ const products = () => {
 };
 
 module.exports = {
-  products,
+  menus,
 };
