@@ -2,12 +2,12 @@ const myDataSource = require('../models/index');
 
 
 const menuCategory = () => {
-  return new Promise((resolve, reject) => {
+  return new Promise((res, rej) => {
     myDataSource.query('SELECT * FROM menucategory', (error, results) => {
       if (error) {
-        reject(error);
+        rej(error);
       } else {
-        resolve(results);
+        res(results);
       }
     });
   });
@@ -16,20 +16,3 @@ const menuCategory = () => {
 module.exports = {
   menuCategory,
 };
-
-// const menuCategory = async (
-//   menuCategory_id,
-//   menuCategory_name,
-//   ref_Category_id
-// ) => {
-//   // category 테이블 전체 조회
-//   const category = await myDataSource.query(
-//     `SELECT * FROM menuCategory;`
-//   );
-
-//   return category;
-// };
-
-// module.exports = {
-//   menuCategory,
-// };

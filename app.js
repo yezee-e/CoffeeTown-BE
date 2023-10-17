@@ -21,6 +21,6 @@ const createApp = () => {
   });
 
   return app;
-};//현준
+};
 
 module.exports = { createApp };
