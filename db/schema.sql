@@ -10,21 +10,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `order`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `order` (
-  `order_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `user_email` varchar(100) NOT NULL,
-  `order_ea` int NOT NULL,
-  PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `schema_migrations`
 --
 
@@ -37,19 +22,6 @@ CREATE TABLE `schema_migrations` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `shipment info`
---
-
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `shipment info` (
-  `user_email` varchar(100) NOT NULL,
-  `user_address` varchar(100) NOT NULL,
-  `user_name` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `userInfo`
 --
 
@@ -58,7 +30,7 @@ CREATE TABLE `shipment info` (
 CREATE TABLE `userInfo` (
   `user_email` varchar(100) NOT NULL,
   `user_name` varchar(20) NOT NULL,
-  `user_password` int NOT NULL,
+  `user_password` varchar(100) NOT NULL,
   `user_nickname` varchar(20) NOT NULL,
   `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `user_grade` varchar(10) DEFAULT 'user',
@@ -88,6 +60,5 @@ CREATE TABLE `userInfo` (
 
 LOCK TABLES `schema_migrations` WRITE;
 INSERT INTO `schema_migrations` (version) VALUES
-  ('20231016005731'),
   ('20231016052249');
 UNLOCK TABLES;
