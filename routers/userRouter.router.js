@@ -10,4 +10,5 @@ router.post('/login', userController.loginWithEmail);
 router.get('/', validateToken, userController.getUser);
 //미들웨어기능으로 authController.authenticate동작 후에 next()로 userController.getUser를 수행
 
+
 module.exports = router;
