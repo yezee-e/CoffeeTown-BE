@@ -1,74 +1,89 @@
-const myDataSource = require('../models/index');
+const DataSource = require('../models/index');
 
-// 장바구니 상품 추가
+// 장바구니에 상품 추가
 
-const addCart = (cartItem) => {
-  return new Promise((res, rej) => {
-    myDataSource.query('INSERT INTO cart SET ?', cartItem, (error, result) => { // cart 테이블에 데이터 추가
-      if (error) {
-        rej(error);
-      } else {
-        res(result);
-      }
-    });
+const createCart = (product_id, user_email, product_ea) => {
+  return new Promise((resolve, reject) => {
+
+    const cart_id = `${user_email}_${product_id}`; // 대안 식별자
+    const sql = 'INSERT INTO cart (cart_id, product_id, user_email, product_ea) VALUES (?, ?, ?, ?)';
+    const values = [cart_id, product_id, user_email, product_ea];
+
+    DataSource.query(sql, values)
+      .then(results => {
+        resolve(results);
+      })
+      .catch(error => {
+        reject(error);
+      });
   });
 };
 
 // 장바구니 조회
 
-const getCart = (user_email) => {
-  return new Promise((res, rej) => {
-    myDataSource.query(
-      'SELECT cart.cart_id, product.product_name, cart.cart_ea, cart.total_price FROM cart INNER JOIN product ON cart.product_id = product.product_id WHERE cart.user_email = ?',
-      [user_email],
-      (error, results) => {
-        if (error) {
-          rej(error);
-        } else {
-          res(results);
-        }
-      }
-    );
+const getCartByUser = (user_email) => {
+  return new Promise((resolve, reject) => {
+
+    const sql = `
+    SELECT c.cart_num, c.cart_id, c.product_id, c.user_email, c.product_ea,
+           p.product_image,
+           (c.product_ea * p.product_price) AS cart_totalprice
+    FROM cart c
+    JOIN product p ON c.product_id = p.product_id
+    WHERE c.user_email = ?;
+  `;
+    const values = [user_email];
+
+    DataSource.query(sql, values)
+      .then(results => {
+        resolve(results);
+      })
+      .catch(error => {
+        reject(error);
+      });
   });
 };
 
 // 장바구니 수량 업데이트
 
-const updateCart = (cart_id, cart_ea, totalPrice, user_email) => {
-  return new Promise((res, rej) => {
-    myDataSource.query(
-      'UPDATE cart SET cart_ea = ?, total_price = ? WHERE cart_id = ? AND user_email = ?',
-      [cart_ea, totalPrice, cart_id, user_email],
-      (error, result) => {
-        if (error) {
-          rej(error);
-        } else {
-          res(result);
-        }
-      }
-    );
+const updateCartItem = (changeAmount, cart_id) => {
+  return new Promise((resolve, reject) => {
+
+    const sql = 'UPDATE cart SET product_ea = product_ea + ? WHERE cart_id = ?';
+    const values = [changeAmount, cart_id];
+
+    DataSource.query(sql, values)
+      .then(results => {
+        resolve(results);
+      })
+      .catch(error => {
+        reject(error);
+      });
   });
 };
 
 // 장바구니 삭제
 
-const deleteCart = (cart_id, user_email) => {
-  return new Promise((res, rej) => {
-    myDataSource.query('DELETE FROM cart WHERE cart_id = ? AND user_email = ?', [cart_id, user_email], (error, result) => {
-      if (error) {
-        rej(error);
-      } else {
-        res(result);
-      }
-    });
+const deleteCartItem = (cart_id) => {
+  return new Promise((resolve, reject) => {
+
+    const sql = 'DELETE FROM cart WHERE cart_id = ?';
+    const values = [cart_id];
+
+    DataSource.query(sql, values)
+      .then(results => {
+        resolve(results);
+      })
+      .catch(error => {
+        reject(error);
+      });
   });
 };
 
 
-
 module.exports = {
-  addCart,
-  getCart,
-  updateCart,
-  deleteCart,
+  createCart,
+  getCartByUser,
+  updateCartItem,
+  deleteCartItem,
 };

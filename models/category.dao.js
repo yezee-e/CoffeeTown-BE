@@ -8,7 +8,7 @@ const list = () => {
     myDataSource.query(
       `SELECT mc.menuCategory_id AS category_id, mc.menuCategory_name AS category_name,
       JSON_ARRAYAGG(
-      JSON_OBJECT('category_id', mc.menuCategory_id, 'product_id', p.product_id, 'product_name', p.product_name, 'product_price', p.product_price, 'product_ea', p.product_ea, 'product_image', convert(brd_p.product_image USING UFT8)
+      JSON_OBJECT('category_id', mc.menuCategory_id, 'product_id', p.product_id, 'product_name', p.product_name, 'product_price', p.product_price, 'product_ea', p.product_ea, 'product_image', p.product_image)
       ) AS product
       FROM menuCategory mc
       JOIN product p ON mc.menuCategory_id = p.menuCategory_id
@@ -24,11 +24,17 @@ const list = () => {
 };
 
 
+
+module.exports = {
+  list,
+};
+
+
 // 카테고리 리스트
 
-// const list = () => {
+// const image = () => {
 //   return new Promise((res, rej) => {
-//     myDataSource.query('SELECT 카테고리 FROM menu', (error, results) => {
+//     myDataSource.query('SELECT product_image FROM product', (error, results) => {
 //       if (error) {
 //         rej(error);
 //       } else {
@@ -54,6 +60,7 @@ const list = () => {
 
 
 
-module.exports = {
-  list,
-};
+// module.exports = {
+//   list,
+//   imageData
+// };

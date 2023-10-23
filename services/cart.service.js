@@ -1,34 +1,33 @@
-const cartdao = require('../models/cart.dao');
+const cartDao = require('../models/cart.dao');
 
-// 장바구니 상품 추가
+// 장바구니에 상품 추가
 
-const addCart = (cartItem) => {
-  return cartdao.addCart(cartItem);
+const addToCart = (product_id, user_email, product_ea) => {
+  return cartDao.createCart(product_id, user_email, product_ea);
 };
 
 // 장바구니 조회
 
-const getCart = (user_email) => {
-  return cartdao.getCart(user_email);
+const getCartByUser = (user_email) => {
+  return cartDao.getCartByUser(user_email);
 };
 
 // 장바구니 수량 업데이트
 
-const updateCart = (cart_id, cart_ea, totalPrice, user_email) => {
-  return cartdao.updateCart(cart_id, cart_ea, totalPrice, user_email);
+const updateCartItem = (changeAmount, cart_id) => {
+  return cartDao.updateCartItem(changeAmount, cart_id);
 };
 
 // 장바구니 삭제
 
-const deleteCart = (cart_id, user_email) => {
-  return cartdao.deleteCart(cart_id, user_email);
+const deleteCartItem = (cart_id) => {
+  return cartDao.deleteCartItem(cart_id);
 };
-
-
 
 module.exports = {
-  addCart,
-  getCart,
-  updateCart,
-  deleteCart,
+  addToCart,
+  getCartByUser,
+  updateCartItem,
+  deleteCartItem,
 };
+

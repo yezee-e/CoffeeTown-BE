@@ -2,76 +2,70 @@ const cartService = require('../services/cart.service');
 
 // 장바구니에 상품 추가
 
-const addCart = async (req, res) => {
-  const { product_id, cart_ea } = req.body;
-  const user_email = req.user_email;
-
-  const totalPrice = cart_ea * product_price; // 총 가격 계산
-
-  const cartItem = {
-    product_id,
-    user_email,
-    cart_ea,
-    total_price: totalPrice,
-  };
+const addToCart = async (req, res) => {
+  const { product_id, user_email, product_ea } = req.body;
 
   try {
-    await cartService.addCart(cartItem);
-    res.json({ message: 'Added to cart successfully' });
+    await cartService.addToCart(product_id, user_email, product_ea);
+    res.status(201).json({ message: '상품이 장바구니에 추가되었습니다.' });
   } catch (error) {
-    res.status(400).json({ message: 'Failed to add to cart' });
+    console.error('데이터베이스 오류: ', error);
+    res.status(400).json({ message: '장바구니에 상품을 추가하는데 실패했습니다.' });
   }
 };
 
 // 장바구니 조회
 
-const getCart = async (req, res) => {
-  const user_email = req.user_email;
+const getCartByUser = async (req, res) => {
+  const { user_email } = req.params;
 
   try {
-    const cartItems = await cartService.getCart(user_email);
-    res.json(cartItems);
+    const cartItems = await cartService.getCartByUser(user_email);
+
+    cartItems.forEach(item => {
+      const imageName = item.product_image.split('/').pop();
+      const imageURL = `http://localhost:5000/main/images/${imageName}`;
+      item.product_image = imageURL;
+    })
+
+    res.status(200).json(cartItems);
   } catch (error) {
-    res.status(400).json({ message: 'Failed to retrieve cart items' });
+    console.error('데이터베이스 오류: ', error);
+    res.status(400).json({ message: '장바구니를 가져오는데 실패했습니다.' });
   }
 };
 
-// 카테고리 수량 업데이트
+// 장바구니 수량 업데이트
 
-const updateCart = async (req, res) => {
-  const cart_id = req.params.cart_id;
-  const { cart_ea } = req.body;
-  const user_email = req.user_email;
-
-  const totalPrice = cart_ea * product_price; // 총 가격 계산
+const updateCartItem = async (req, res) => {
+  const { changeAmount, cart_id } = req.body;
 
   try {
-    await cartService.updateCart(cart_id, cart_ea, totalPrice, user_email);
-    res.json({ message: 'Cart item updated successfully' });
+    await cartService.updateCartItem(changeAmount, cart_id);
+    res.status(200).json({ message: '장바구니 상품 수량이 업데이트되었습니다.' });
   } catch (error) {
-    res.status(400).json({ message: 'Failed to update cart item' });
+    console.error('데이터베이스 오류: ', error);
+    res.status(400).json({ message: '장바구니 상품 수량을 업데이트하는데 실패했습니다.' });
   }
 };
 
 // 장바구니 삭제
 
-const deleteCart = async (req, res) => {
-  const cart_id = req.params.cart_id;
-  const user_email = req.user_email;
+const deleteCartItem = async (req, res) => {
+  const { cart_id } = req.params;
 
   try {
-    await cartService.deleteCart(cart_id, user_email);
-    res.json({ message: 'Cart item deleted successfully' });
+    await cartService.deleteCartItem(cart_id);
+    res.status(200).json({ message: '장바구니 상품이 삭제되었습니다.' });
   } catch (error) {
-    res.status(400).json({ message: 'Failed to delete cart item' });
+    console.error('데이터베이스 오류: ', error);
+    res.status(400).json({ message: '장바구니 상품을 삭제하는데 실패했습니다.' });
   }
 };
 
-
-
 module.exports = {
-  addCart,
-  getCart,
-  updateCart,
-  deleteCart
+  addToCart,
+  getCartByUser,
+  updateCartItem,
+  deleteCartItem,
 };
