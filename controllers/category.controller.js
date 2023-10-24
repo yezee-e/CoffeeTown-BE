@@ -1,4 +1,4 @@
-const categorydao = require('../models/category.dao');
+// const categorydao = require('../models/category.dao');
 
 const list = async (req, res) => {
   try {
@@ -15,8 +15,6 @@ const list = async (req, res) => {
           product.product_image = imageURL; // 이미지 URL로 설정
         });
       });
-
-      console.log('mmm', itemsWithImages);
 
       return res.status(200).json(itemsWithImages);
     }
