@@ -24,11 +24,17 @@ const list = () => {
 };
 
 
+
+module.exports = {
+  list,
+};
+
+
 // 카테고리 리스트
 
-// const list = () => {
+// const image = () => {
 //   return new Promise((res, rej) => {
-//     myDataSource.query('SELECT 카테고리 FROM menu', (error, results) => {
+//     myDataSource.query('SELECT product_image FROM product', (error, results) => {
 //       if (error) {
 //         rej(error);
 //       } else {
@@ -54,6 +60,7 @@ const list = () => {
 
 
 
-module.exports = {
-  list,
-};
+// module.exports = {
+//   list,
+//   imageData
+// };
