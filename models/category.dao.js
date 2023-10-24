@@ -4,7 +4,6 @@ const myDataSource = require('../models/index');
 
 const list = () => {
   return new Promise((res, rej) => {
-    
     myDataSource.query(
       `SELECT mc.menuCategory_id AS category_id, mc.menuCategory_name AS category_name,
       JSON_ARRAYAGG(
@@ -14,15 +13,15 @@ const list = () => {
       JOIN product p ON mc.menuCategory_id = p.menuCategory_id
       GROUP BY mc.menuCategory_id, mc.menuCategory_name;`,
       (error, results) => {
-      if (error) {
-        rej(error);
-      } else {
-        res(results);
+        if (error) {
+          rej(error);
+        } else {
+          res(results);
+        }
       }
-    });
+    );
   });
 };
-
 
 // 카테고리 리스트
 
@@ -51,8 +50,6 @@ const list = () => {
 //     });
 //   });
 // };
-
-
 
 module.exports = {
   list,

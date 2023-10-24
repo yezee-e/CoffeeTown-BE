@@ -12,7 +12,7 @@ const signUP = async (user_email, user_name, user_password, user_nickname) => {
 
   //b. 비밀번호가 5자리를 넘는지 확인
   if (user_password.length < 5) {
-    throw new Error('비밀번호는 5자리 이상이어야합니다');
+    throw new Error('비밀번호는 5자리 이상 입력해주세요!');
   }
 
   // c.이미 가입된 유저인지 아닌지 판단

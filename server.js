@@ -4,7 +4,7 @@ const { createApp } = require('./app');
 
 const startServer = async () => {
   const app = createApp();
-  const PORT = process.env.PORT || 5000;
+  const PORT = process.env.PORT || 8000;
 
   try {
     app.listen(PORT, () => {

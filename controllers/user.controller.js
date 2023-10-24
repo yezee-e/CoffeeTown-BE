@@ -23,7 +23,7 @@ const signUp = async (req, res) => {
 
     res.status(201).json({ message: 'user_Created' });
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -40,11 +40,15 @@ const loginWithEmail = async (req, res) => {
     });
 
     let user = await userService.logIn(user_email, user_password);
-    user = user[0].user_email;
 
-    res.status(200).json({ status: 'success', user, token });
+    res.status(200).json({
+      status: 'success',
+      user: user[0].user_email,
+      token,
+      nickname: user[0].user_nickname,
+    });
   } catch (error) {
-    res.status(400).json({ status: 'login fail', error: error.message });
+    res.status(400).json({ status: 'login fail', message: error.message });
   }
 };
 
@@ -60,7 +64,7 @@ const getUser = async (req, res) => {
       nickname: user[0].user_nickname,
     });
   } catch (err) {
-    res.status(400).json({ status: 'getUser fail', error: err.message });
+    res.status(400).json({ status: 'getUser fail', message: err.message });
   }
 };
 
