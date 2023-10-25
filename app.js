@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const routers = require('./routers');
 const morgan = require('morgan');
+const path = require('path');
 
 var corsOptions = {
   origin: '*',
@@ -11,8 +12,14 @@ var corsOptions = {
 const createApp = () => {
   const app = express();
   app.use(cors(corsOptions));
+  app.use(express.static(path.join(__dirname, '../CoffeeTown-FE/build')));
   app.use(express.json());
-  app.use(morgan('dev'));
+  
+  if(process.env.NODE_ENV == 'production'){
+    app.use(morgan('combined'));
+  } else {
+    app.use(morgan('dev'));
+}
   app.use(routers);
   app.use((err, req, res, next) => {
     const { status, message } = err;
