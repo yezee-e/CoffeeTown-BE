@@ -20,7 +20,7 @@ const list = async (req, res) => {
     }
 
     const categoriesWithImages = await categorydao.list();
-
+    // 
     // 각 카테고리에 이미지 URL로만 설정
     categoriesWithImages.forEach((category) => {
       category.product.forEach((product) => {
