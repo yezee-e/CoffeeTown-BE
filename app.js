@@ -12,12 +12,12 @@ const createApp = () => {
   const app = express();
   app.use(cors(corsOptions));
   app.use(express.json());
-  app.use(morgan('combined'));
+  app.use(morgan('dev'));
   app.use(routers);
   app.use((err, req, res, next) => {
     const { status, message } = err;
     console.error(err);
-    res.status(status || 500).json({ message });
+    res.status(status || 400).json({ message });
   });
 
   return app;
