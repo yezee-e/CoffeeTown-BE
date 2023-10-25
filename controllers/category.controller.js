@@ -1,4 +1,4 @@
-// const categorydao = require('../models/category.dao');
+const categorydao = require('../models/category.dao');
 
 const list = async (req, res) => {
   try {
