@@ -2,17 +2,17 @@ const express = require('express');
 const cors = require('cors');
 const routers = require('./routers');
 const morgan = require('morgan');
-const path = require('path');
+// const path = require('path');
 
 var corsOptions = {
-  origin: '*',
+  origin: process.env.ALLOW_ORIGIN,
   optionsSuccessStatus: 200,
 };
 
 const createApp = () => {
   const app = express();
   app.use(cors(corsOptions));
-  app.use(express.static(path.join(__dirname, '../CoffeeTown-FE/build')));
+  // app.use(express.static(path.join(__dirname, '../CoffeeTown-FE/build')));
   app.use(express.json());
   
   if(process.env.NODE_ENV == 'production'){
@@ -20,7 +20,7 @@ const createApp = () => {
   } else {
     app.use(morgan('dev'));
 }
-  app.use(routers);
+  app.use('/api', routers);
   app.use((err, req, res, next) => {
     const { status, message } = err;
     console.error(err);
