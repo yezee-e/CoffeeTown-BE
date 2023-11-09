@@ -1,6 +1,12 @@
 # CoffeeTown 팀 프로젝트
 
-> 베포주소:https://a-21e3735.slack.com/archives/C05UKFSEA80/p1698297708578909
+> 베포주소:https://voluble-jelly-9d31ab.netlify.app/
+
+
+<br/>
+
+ <img width="332" alt="스크린샷 2023-11-09 오후 9 14 50" src="https://github.com/yezee-e/CoffeeTown-BE/assets/98735544/873f31fd-742e-4015-8389-af413e3d9791">
+
 
 <br/>
 <br/>
